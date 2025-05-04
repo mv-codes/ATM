@@ -54,7 +54,7 @@ public class Account {
             System.out.println("--------------------------------------------------------------");
             System.out.println("Please enter A, B, C, D, or E to select an option from above: ");
             System.out.println("--------------------------------------------------------------");
-            option = input.next().charAt(0);
+            option = Character.toUpperCase(input.next().charAt(0));
             System.out.println("\n");
 
             switch(option) {
@@ -66,12 +66,27 @@ public class Account {
                 case 'B':
                     System.out.println("Enter Deposit Amount: ");
                     int amount = input.nextInt();
+                    while (amount < 0) {
+                        System.out.println("Please enter a positive amount");
+                        amount = input.nextInt();
+                    }
                     deposit(amount);
                     break;
 
                 case 'C':
                     System.out.println("Enter amount to withdraw: ");
                     int amount2 = input.nextInt();
+                    while (amount2 > balance || amount2 < 0) {
+                        if (amount2 > balance) {
+                            System.out.println("Insufficient Funds");
+                            System.out.println("Current Balance: " + balance);
+                            System.out.println("Please enter again: ");
+                            amount2 = input.nextInt();
+                        } else if (amount2 < 0) {
+                            System.out.println("Please enter a positive amount");
+                            amount2 = input.nextInt();
+                        }
+                    }
                     withdraw(amount2);
                     break;
 
@@ -82,6 +97,7 @@ public class Account {
                 case 'E':
                     System.out.println("Thank You");
                     System.out.println("Your session has ended.");
+                    break;
 
 
                 default:
